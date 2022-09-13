@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
 
 function Square(props) {
   return (
@@ -47,7 +47,7 @@ class Board extends React.Component {
 
 class Game extends React.Component {
   /**
-   * Em classes JS voce sempre precisa chamar 'super' ao definir o construtor de uma subclasse. Todos os componentes de classe React que possuem um m�todo construtor devem inicia-lo com uma chamada 'super(props)'
+   * Em classes JS voce sempre precisa chamar 'super' ao definir o construtor de uma subclasse. Todos os componentes de classe React que possuem um método construtor devem inicia-lo com uma chamada 'super(props)'
    */
   constructor(props) {
     super(props)
@@ -86,15 +86,10 @@ class Game extends React.Component {
     const history = this.state.history
     const current = history[this.state.stepNumber]
     const winner = calculateWinner(current.squares)
-    let status
-    if(winner) {
-      status = 'Winner: ' + winner
-    }else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
-    }
+    const status = winner ? `Vencedor: ${winner}` : `Próximo jogador: ${this.state.xIsNext ? 'X' : 'O'}`
 
     const moves = history.map((step, move) => {
-      const desc = move ? 'Go to move #' + move : 'Go to game start'
+      const desc = move ? `Ir para movimento #${move}` : 'Ir para o início do jogo'
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -129,17 +124,14 @@ function calculateWinner(squares) {
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
+  ]
 
-// ========================================
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) return squares[a]
+  }
+  return null
+}
 
 ReactDOM.render(
   <Game />,
